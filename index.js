@@ -26,12 +26,20 @@ let persons = [
     }
   ]
 
-app.get('/', (req, res) => {
-    res.send('<h1>Hello World!</h1>')
+app.get('/', (request, response) => {
+    response.send('<h1>Hello World!</h1>')
   })
-  
-app.get('/api/persons', (req, res) => {
-    res.json(persons)
+
+app.get('/info', (request, response) => {
+    const total = persons.length
+    const resString = `Phonebook has info for  ${total} people
+    ${new Date()}` 
+    const print = resString.split('\n')
+    response.send(print)    
+})
+
+app.get('/api/persons', (request, response) => {
+    response.json(persons)
 })
 
 app.get('/api/persons/:id', (request, response) => {
@@ -59,25 +67,33 @@ const generateId = () => {
     return maxId + 1
   }
   
-  app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response) => {
     const body = request.body
-  
+    const 
+
     if (!body.name) {
-      return response.status(400).json({ 
+        return response.status(400).json({ 
         error: 'name missing' 
-      })
+        })
     }
-  
+
+    if (persons.filter(note => note.name === body.name)) {
+        return response.tatus(400).json({ 
+            error: 'name must be unique' 
+            })
+    }
+
+
     const note = {
-      name: body.name,
-      number: body.number,
-      id: generateId(),
-    }
-  
-    persons = persons.concat(note)
-  
-    response.json(note)
-  })
+        name: body.name,
+        number: body.number,
+        id: generateId(),
+}
+
+persons = persons.concat(note)
+
+response.json(note)
+})
 
 const PORT = 3001
 app.listen(PORT, () => {
