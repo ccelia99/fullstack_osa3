@@ -3,8 +3,8 @@ const app = express()
 const cors = require('cors')
 
 app.use(express.json())
-app.use(express.static('build'))
 app.use(cors())
+app.use(express.static('build'))
 
 const morgan = require('morgan')
 morgan.token('body', function (req, res) {
@@ -88,7 +88,6 @@ app.post('/api/persons', (request, response) => {
     }
 
     if ((persons.filter(note =>  note.name === body.name )).length !== 0) {
-        console.log('onko uniikki', body.name)
         return response.status(400).json({ 
             error: 'name must be unique' 
         })
