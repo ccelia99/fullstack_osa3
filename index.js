@@ -87,8 +87,6 @@ app.post('/api/persons', (request, response) => {
         })
     }
 
-    const totta = (persons.filter(note =>  note.name === body.name )).length === 0
-    console.log('totta', totta)
     if ((persons.filter(note =>  note.name === body.name )).length !== 0) {
         console.log('onko uniikki', body.name)
         return response.status(400).json({ 
