@@ -3,7 +3,6 @@ const app = express()
 const cors = require('cors')
 require('dotenv').config()
 const Note = require('./models/note')
-Note.init()
 
 app.use(express.static('build'))
 app.use(cors())
